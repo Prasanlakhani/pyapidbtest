@@ -13,4 +13,4 @@ RUN pip install -r /app/requirements.txt \
 
 COPY . /app/
 
-CMD [ "uvicorn", "app.main:app", "--reload" ]
+CMD exec uvicorn app.main:app --reload
