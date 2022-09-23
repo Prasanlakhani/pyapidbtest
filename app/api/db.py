@@ -28,8 +28,9 @@ def getconn():
             ip_type= IPTypes.PUBLIC  # IPTypes.PRIVATE for private IP
         )
     return conn
-  
-DATABASE_URL = "postgresql+pg8000://postgres:"SECRET_RES"@34.145.42.112/postgres"
+
+SECRET_RESPONSE = SECRET_N()
+DATABASE_URL = "postgresql+pg8000://postgres:"SECRET_RESPONSE"@34.145.42.112/postgres"
 
 engine = create_engine(DATABASE_URL, creator=getconn)
 metadata = MetaData()
