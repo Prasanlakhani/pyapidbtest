@@ -14,7 +14,7 @@ def SECRET_N():
     SECRET_NAME = {"name": f"projects/736835190022/secrets/sql_pwd/versions/latest"}
     response = client.access_secret_version(SECRET_NAME)
     SECRET_RES = response.payload.data.decode("UTF-8")
-    DATABASE_URL = "postgresql+pg8000://postgres:SECRET_RES@34.145.42.112/postgres"
+    DATABASE_URL = "postgresql+pg8000://postgres:"SECRET_RES"@34.145.42.112/postgres"
     return SECRET_RES
   
 def getconn():
