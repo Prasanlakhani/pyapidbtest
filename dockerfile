@@ -12,3 +12,5 @@ RUN pip install -r /app/requirements.txt \
     && rm -rf /root/.cache/pip
 
 COPY . /app/
+
+CMD exec uvicorn app.main:app --reload
