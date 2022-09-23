@@ -7,15 +7,16 @@ from sqlalchemy.orm import sessionmaker
 from google.cloud.sql.connector import Connector, IPTypes
 from google.cloud import secretmanager
 
-DATABASE_URL = "postgresql+pg8000://postgres:Atos123@34.145.42.112/postgres"
+
 
 def SECRET_N():
     client = secretmanager.SecretManagerServiceClient()
     SECRET_NAME = {"name": f"projects/736835190022/secrets/sql_pwd/versions/latest"}
     response = client.access_secret_version(SECRET_NAME)
     SECRET_RES = response.payload.data.decode("UTF-8")
+    DATABASE_URL = "postgresql+pg8000://postgres:SECRET_RES@34.145.42.112/postgres"
     return SECRET_RES
-
+  
 def getconn():
     SECRET_RESPONSE = SECRET_N()
     with Connector() as connector:
