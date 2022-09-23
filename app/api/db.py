@@ -8,14 +8,16 @@ from google.cloud.sql.connector import Connector, IPTypes
 from google.cloud import secretmanager
 
 
-
 def SECRET_N():
     client = secretmanager.SecretManagerServiceClient()
     SECRET_NAME = {"name": f"projects/736835190022/secrets/sql_pwd/versions/latest"}
     response = client.access_secret_version(SECRET_NAME)
     SECRET_RES = response.payload.data.decode("UTF-8")
     return SECRET_RES
-  
+
+SECRET_RESPONSE = SECRET_N()
+DATABASE_URL = "postgresql+pg8000://postgres:"SECRET_RESPONSE"@34.145.42.112/postgres"
+
 def getconn():
     SECRET_RESPONSE = SECRET_N()
     with Connector() as connector:
@@ -28,9 +30,6 @@ def getconn():
             ip_type= IPTypes.PUBLIC  # IPTypes.PRIVATE for private IP
         )
     return conn
-
-SECRET_RESPONSE = SECRET_N()
-DATABASE_URL = "postgresql+pg8000://postgres:"SECRET_RESPONSE"@34.145.42.112/postgres"
 
 engine = create_engine(DATABASE_URL, creator=getconn)
 metadata = MetaData()
